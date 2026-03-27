@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun Hub</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    scroll-behavior: smooth;
+}
+
+/* Navbar */
+nav {
+    position: fixed;
+    width: 100%;
+    background: #1e293b;
+    padding: 10px;
+    text-align: center;
+}
+nav a {
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Sections */
+section {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    border: none;
+    background: #38bdf8;
+    color: black;
+    cursor: pointer;
+    margin: 5px;
+}
+
+/* Game */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    gap: 5px;
+    justify-content: center;
+}
+.cell {
+    width: 80px;
+    height: 80px;
+    background: #334155;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Meme */
+.meme-container {
+    position: relative;
+    display: inline-block;
+}
+.meme-container img {
+    width: 300px;
+}
+.meme-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    width: 90%;
+    text-shadow: 2px 2px 5px black;
+}
+.top-text { top: 10px; }
+.bottom-text { bottom: 10px; }
+
+/* Quiz */
+.quiz-option {
+    display: block;
+    margin: 5px;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    background: #1e293b;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="#game">Game</a>
+<a href="#meme">Meme</a>
+<a href="#quiz">Quiz</a>
+<a href="#joke">Jokes</a>
+</nav>
+
+<section>
+<h1>🔥 Fun Hub</h1>
+<p>All-in-one fun website</p>
+</section>
+
+<!-- GAME -->
+<section id="game">
+<h2>🎮 Tic Tac Toe</h2>
+<div class="grid" id="grid"></div>
+<p id="status"></p>
+<button onclick="resetGame()">Restart Game</button>
+</section>
+
+<!-- MEME (FIXED) -->
+<section id="meme">
+<h2>😂 Meme Generator</h2>
+
+<input type="text" id="topText" placeholder="Top Text"><br><br>
+<input type="text" id="bottomText" placeholder="Bottom Text"><br><br>
+
+<label>Text Color:</label>
+<input type="color" id="textColor" value="#ffffff"><br><br>
+
+<button onclick="generateMeme()">Generate</button>
+
+<br><br>
+
+<div class="meme-container">
+    <img src="https://i.imgflip.com/30b1gx.jpg">
+    <div id="topOutput" class="meme-text top-text"></div>
+    <div id="bottomOutput" class="meme-text bottom-text"></div>
+</div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+<h2>🧠 Quiz</h2>
+<p>Which language is used for web?</p>
+<button class="quiz-option" onclick="checkQuiz('Python')">Python</button>
+<button class="quiz-option" onclick="checkQuiz('JavaScript')">JavaScript</button>
+<button class="quiz-option" onclick="checkQuiz('C++')">C++</button>
+<p id="quizResult"></p>
+</section>
+
+<!-- JOKE -->
+<section id="joke">
+<h2>🔮 Random Joke</h2>
+<button onclick="getJoke()">Get Joke</button>
+<p id="jokeText"></p>
+</section>
+
+<footer>
+<p>Made by RC 🚀</p>
+</footer>
+
+<script>
+
+/* GAME */
+let grid = document.getElementById("grid");
+let cells = [];
+let current = "X";
+let gameActive = true;
+
+for (let i = 0; i < 9; i++) {
+    let cell = document.createElement("div");
+    cell.className = "cell";
+    cell.onclick = () => move(cell);
+    grid.appendChild(cell);
+    cells.push(cell);
+}
+
+function move(cell) {
+    if (cell.innerText === "" && gameActive) {
+        cell.innerText = current;
+
+        if (checkWinner()) {
+            document.getElementById("status").innerText = `🏆 Winner: ${current}`;
+            gameActive = false;
+            return;
+        }
+
+        if (cells.every(c => c.innerText !== "")) {
+            document.getElementById("status").innerText = "🤝 It's a Tie!";
+            gameActive = false;
+            return;
+        }
+
+        current = current === "X" ? "O" : "X";
+    }
+}
+
+function checkWinner() {
+    let p = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ];
+    return p.some(a =>
+        cells[a[0]].innerText === current &&
+        cells[a[1]].innerText === current &&
+        cells[a[2]].innerText === current
+    );
+}
+
+function resetGame() {
+    cells.forEach(c => c.innerText = "");
+    current = "X";
+    gameActive = true;
+    document.getElementById("status").innerText = "";
+}
+
+/* MEME */
+function generateMeme() {
+    document.getElementById("topOutput").innerText =
+        document.getElementById("topText").value;
+
+    document.getElementById("bottomOutput").innerText =
+        document.getElementById("bottomText").value;
+
+    let color = document.getElementById("textColor").value;
+    document.getElementById("topOutput").style.color = color;
+    document.getElementById("bottomOutput").style.color = color;
+}
+
+/* QUIZ */
+function checkQuiz(answer) {
+    document.getElementById("quizResult").innerText =
+        answer === "JavaScript" ? "✅ Correct!" : "❌ Wrong!";
+}
+
+/* JOKE */
+function getJoke() {
+    let jokes = [
+        "Why do programmers hate nature? Too many bugs!",
+        "Why JavaScript? Because Java was taken 😅",
+        "Debugging: Removing bugs... coding: adding bugs"
+    ];
+    document.getElementById("jokeText").innerText =
+        jokes[Math.floor(Math.random() * jokes.length)];
+}
+
+</script>
+
+</body>
+</html>

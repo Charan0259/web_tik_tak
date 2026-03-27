@@ -3,55 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fun Hub</title>
+<title>Fun Hub Pro</title>
 
 <style>
 body {
     margin: 0;
-    font-family: Arial;
+    font-family: 'Segoe UI', sans-serif;
     background: #0f172a;
     color: white;
-    scroll-behavior: smooth;
+    display: flex;
 }
 
-/* Navbar */
-nav {
+/* SIDEBAR */
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background: #020617;
     position: fixed;
-    width: 100%;
-    background: #1e293b;
-    padding: 10px;
-    text-align: center;
+    padding-top: 20px;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.5);
 }
-nav a {
-    color: white;
-    margin: 10px;
+
+.sidebar a {
+    display: block;
+    color: #94a3b8;
+    padding: 15px;
     text-decoration: none;
-    font-weight: bold;
+    transition: 0.3s;
 }
 
-/* Sections */
+.sidebar a:hover {
+    background: #38bdf8;
+    color: black;
+    transform: translateX(5px);
+}
+
+/* MAIN CONTENT */
+.main {
+    margin-left: 200px;
+    width: 100%;
+}
+
+/* SECTIONS */
 section {
-    padding: 80px 20px;
+    padding: 60px 20px;
     text-align: center;
 }
 
-/* Buttons */
+/* CARD STYLE */
+.card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px #38bdf8;
+}
+
+/* BUTTON */
 button {
     padding: 10px 20px;
     border: none;
-    background: #38bdf8;
+    background: linear-gradient(45deg, #38bdf8, #0ea5e9);
     color: black;
     cursor: pointer;
     margin: 5px;
+    border-radius: 8px;
+    transition: 0.3s;
 }
 
-/* Game */
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px #38bdf8;
+}
+
+/* GAME */
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 80px);
     gap: 5px;
     justify-content: center;
 }
+
 .cell {
     width: 80px;
     height: 80px;
@@ -61,16 +99,25 @@ button {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-/* Meme */
+.cell:hover {
+    background: #38bdf8;
+    color: black;
+}
+
+/* MEME */
 .meme-container {
     position: relative;
     display: inline-block;
 }
+
 .meme-container img {
     width: 300px;
+    border-radius: 10px;
 }
+
 .meme-text {
     position: absolute;
     left: 50%;
@@ -81,90 +128,105 @@ button {
     width: 90%;
     text-shadow: 2px 2px 5px black;
 }
+
 .top-text { top: 10px; }
 .bottom-text { bottom: 10px; }
 
-/* Quiz */
-.quiz-option {
-    display: block;
+/* INPUT */
+input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
     margin: 5px;
 }
 
-/* Footer */
+/* FOOTER */
 footer {
     padding: 20px;
-    background: #1e293b;
+    background: #020617;
+    text-align: center;
+    margin-top: 40px;
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-<a href="#game">Game</a>
-<a href="#meme">Meme</a>
-<a href="#quiz">Quiz</a>
-<a href="#joke">Jokes</a>
-</nav>
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <a href="#home">🏠 Home</a>
+    <a href="#game">🎮 Game</a>
+    <a href="#meme">😂 Meme</a>
+    <a href="#quiz">🧠 Quiz</a>
+    <a href="#joke">🔮 Joke</a>
+</div>
 
-<section>
-<h1>🔥 Fun Hub</h1>
-<p>All-in-one fun website</p>
+<div class="main">
+
+<section id="home">
+<h1>🔥 Fun Hub Pro</h1>
+<p>Next Level Interactive Website</p>
 </section>
 
 <!-- GAME -->
 <section id="game">
+<div class="card">
 <h2>🎮 Tic Tac Toe</h2>
 <div class="grid" id="grid"></div>
 <p id="status"></p>
-<button onclick="resetGame()">Restart Game</button>
+<button onclick="resetGame()">Restart</button>
+</div>
 </section>
 
-<!-- MEME (FIXED) -->
+<!-- MEME -->
 <section id="meme">
+<div class="card">
 <h2>😂 Meme Generator</h2>
 
-<input type="text" id="topText" placeholder="Top Text"><br><br>
-<input type="text" id="bottomText" placeholder="Bottom Text"><br><br>
-
-<label>Text Color:</label>
-<input type="color" id="textColor" value="#ffffff"><br><br>
+<input type="text" id="topText" placeholder="Top Text"><br>
+<input type="text" id="bottomText" placeholder="Bottom Text"><br>
+<input type="color" id="textColor" value="#ffffff"><br>
 
 <button onclick="generateMeme()">Generate</button>
 
 <br><br>
 
 <div class="meme-container">
-    <img src="https://i.imgflip.com/30b1gx.jpg">
-    <div id="topOutput" class="meme-text top-text"></div>
-    <div id="bottomOutput" class="meme-text bottom-text"></div>
+<img src="https://i.imgflip.com/30b1gx.jpg">
+<div id="topOutput" class="meme-text top-text"></div>
+<div id="bottomOutput" class="meme-text bottom-text"></div>
+</div>
 </div>
 </section>
 
 <!-- QUIZ -->
 <section id="quiz">
+<div class="card">
 <h2>🧠 Quiz</h2>
 <p>Which language is used for web?</p>
-<button class="quiz-option" onclick="checkQuiz('Python')">Python</button>
-<button class="quiz-option" onclick="checkQuiz('JavaScript')">JavaScript</button>
-<button class="quiz-option" onclick="checkQuiz('C++')">C++</button>
+<button onclick="checkQuiz('Python')">Python</button>
+<button onclick="checkQuiz('JavaScript')">JavaScript</button>
+<button onclick="checkQuiz('C++')">C++</button>
 <p id="quizResult"></p>
+</div>
 </section>
 
 <!-- JOKE -->
 <section id="joke">
+<div class="card">
 <h2>🔮 Random Joke</h2>
 <button onclick="getJoke()">Get Joke</button>
 <p id="jokeText"></p>
+</div>
 </section>
 
 <footer>
-<p>Made by RC 🚀</p>
+<p>Made by RC 🚀 | Advanced UI</p>
 </footer>
 
-<script>
+</div>
 
-/* GAME */
+<script>
 let grid = document.getElementById("grid");
 let cells = [];
 let current = "X";
@@ -189,7 +251,7 @@ function move(cell) {
         }
 
         if (cells.every(c => c.innerText !== "")) {
-            document.getElementById("status").innerText = "🤝 It's a Tie!";
+            document.getElementById("status").innerText = "🤝 Tie!";
             gameActive = false;
             return;
         }
@@ -218,26 +280,23 @@ function resetGame() {
     document.getElementById("status").innerText = "";
 }
 
-/* MEME */
 function generateMeme() {
+    let color = document.getElementById("textColor").value;
+
     document.getElementById("topOutput").innerText =
         document.getElementById("topText").value;
-
     document.getElementById("bottomOutput").innerText =
         document.getElementById("bottomText").value;
 
-    let color = document.getElementById("textColor").value;
     document.getElementById("topOutput").style.color = color;
     document.getElementById("bottomOutput").style.color = color;
 }
 
-/* QUIZ */
 function checkQuiz(answer) {
     document.getElementById("quizResult").innerText =
-        answer === "JavaScript" ? "✅ Correct!" : "❌ Wrong!";
+        answer === "JavaScript" ? "✅ Correct!" : "❌ Try Again!";
 }
 
-/* JOKE */
 function getJoke() {
     let jokes = [
         "Why do programmers hate nature? Too many bugs!",
@@ -247,7 +306,6 @@ function getJoke() {
     document.getElementById("jokeText").innerText =
         jokes[Math.floor(Math.random() * jokes.length)];
 }
-
 </script>
 
 </body>
